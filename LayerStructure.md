@@ -3,10 +3,10 @@
 - ドメインモデルに関するコード全部を 1 つの層に集中させ、ユーザーインターフェース、ユースケース、インフラストラクチャのコードから分離する。
 
 ## レイヤー構造
-![](./drawing/LayerStructure/LayerStructure.png)
+![](./diagrams/LayerStructure/LayerStructure.png)
 
 ## 各レイヤーの主なクラス
-![](./drawing/LayerStructure_TypicalClass/LayerStructure_TypicalClass.png)
+![](./diagrams/LayerStructure_TypicalClass/LayerStructure_TypicalClass.png)
 
 ## 各レイヤーの責務
 ### ドメイン（Domain）層
@@ -38,3 +38,12 @@
 ### プレゼンテーション（Presentation）層
 - コマンドサービス、クエリサービスに処理を移譲する。
 - ユースケース層、ドメイン層で発生した例外のハンドリングを行、エラー内容を画面に表示したり、API の戻り値の JSON に変換するなどを行う。
+
+## 処理フロー
+### 登録/更新系
+![](./diagrams/LayerStructure_CommandFlow/LayerStructure_CommandFlow.png)
+- Repository と DB の間に SQL を発行するだけの責務を持った DAO を挟んでも良い。
+
+### 参照系
+![](./diagrams/LayerStructure_QueryFlow/LayerStructure_QueryFlow.png)
+- QueryService と DB の間に SQL を発行するだけの責務を持った DAO を挟んでも良い。

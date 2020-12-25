@@ -1,0 +1,13 @@
+@startuml LayerStructure_QueryFlow
+
+participant Controller
+participant QueryService
+database DB
+
+Controller -> QueryService: 参照に特化した DTO 取得(Id)
+QueryService -> DB: SQL 発行（select）
+DB -> QueryService: ORM で受け取る
+QueryService -> QueryService: ORM を DTO に変換
+QueryService -> Controller: DTO を返却
+
+@enduml
