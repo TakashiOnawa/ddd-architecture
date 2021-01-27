@@ -1,0 +1,27 @@
+@startuml LayerStructure_CommandFlow
+
+participant Controller
+participant CommandService
+participant DomainObject
+participant Repository
+database DB
+
+Controller -> Controller: DTO 生成
+Controller -> CommandService: 登録/更新処理実行(DTO)
+CommandService -> Repository: DomainObject を取得(Id)
+Repository -> DB: SQLを発行（select）
+DB -> Repository: ORM で受け取る
+Repository -> Repository: ORM を DomainObject に変換
+Repository -> CommandService: DomainObject を返却
+CommandService -> DomainObject: DomainObject の状態変更()
+DomainObject -> DomainObject: バリデーション
+DomainObject -> DomainObject: 内部状態変更
+DomainObject -> CommandService
+CommandService -> Repository: DomainObject を永続化(DomainObject)
+Repository -> Repository: DomainObject を ORM に変換
+Repository -> DB: SQL を発行（insert/update/delete）
+DB -> Repository
+Repository -> CommandService
+CommandService -> Controller
+
+@enduml

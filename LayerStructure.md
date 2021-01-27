@@ -3,10 +3,10 @@
 - ドメインモデルに関するコード全部を 1 つの層に集中させ、ユーザーインターフェース、ユースケース、インフラストラクチャのコードから分離する。
 
 ## レイヤー構造
-![](./drawing/LayerStructure/LayerStructure.png)
+![](./diagrams/LayerStructure/LayerStructure.png)
 
 ## 各レイヤーの主なクラス
-![](./drawing/LayerStructure_TypicalClass/LayerStructure_TypicalClass.png)
+![](./diagrams/LayerStructure_TypicalClass/LayerStructure_TypicalClass.png)
 
 ## 各レイヤーの責務
 ### ドメイン（Domain）層
@@ -18,7 +18,7 @@
     - 他のコンテキストの情報をドメインオブジェクトに変換する必要がある場合、例えば、商品管理コンテキストにおける「商品」を配送コンテキストで「配送物」として扱うためには、商品管理コンテキストの「商品」を「配送物」に変換する必要があるが、その際にデータベースにアクセスする必要があるかもしれないし、商品管理コンテキストが他のサービスに分かれている場合は特定の通信プロトコルを利用しなければならないかもしれないため、インターフェースで表現する。
 
 ## ユースケース（UseCase）層
-- ビジネスロジックは含まず薄く保ち、ドメインオブジェクトを利用してソフトウェアで解決したいことを実現するためのタスク調整飲みを行う。
+- ビジネスロジックは含まず薄く保ち、ドメインオブジェクトを利用してソフトウェアで解決したいことを実現するためのタスク調整のみを行う。
 - トランザクション管理もこのレイヤーの責務である。
 - 主に登録/更新系のコマンドサービス（CommandService）と参照系のクエリサービス（QueryService）に別れる。
   - コマンドサービス
@@ -38,3 +38,12 @@
 ### プレゼンテーション（Presentation）層
 - コマンドサービス、クエリサービスに処理を移譲する。
 - ユースケース層、ドメイン層で発生した例外のハンドリングを行、エラー内容を画面に表示したり、API の戻り値の JSON に変換するなどを行う。
+
+## 処理フロー
+### 登録/更新系
+![](./diagrams/LayerStructure_CommandFlow/LayerStructure_CommandFlow.png)
+- Repository と DB の間に SQL を発行するだけの責務を持った DAO を挟んでも良い。
+
+### 参照系
+![](./diagrams/LayerStructure_QueryFlow/LayerStructure_QueryFlow.png)
+- QueryService と DB の間に SQL を発行するだけの責務を持った DAO を挟んでも良い。
