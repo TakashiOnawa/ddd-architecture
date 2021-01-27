@@ -38,7 +38,6 @@ rectangle {
 
     CommandService --> DomainObject
     CommandService --> Repository
-    CommandService --> DomainObject
 
     RepositoryImpl .up.|> Repository
     ServiceImpl .up.|> Service
