@@ -10,8 +10,8 @@ rectangle {
         class Controller
     }
 
-    package "ユースケース（UseCase）" as UseCase #d5e8d4 {
-        class CommandService
+    package "アプリケーション（Application）" as Application #d5e8d4 {
+        class UseCase
         interface QueryService
     }
 
@@ -32,12 +32,13 @@ rectangle {
         class QueryServiceImpl
     }
 
-    Controller --> CommandService
-    Controller --> QueryService
+    Controller --> UseCase
     Controller --> DomainObject
 
-    CommandService --> DomainObject
-    CommandService --> Repository
+    UseCase -> QueryService
+    UseCase --> DomainObject
+    UseCase --> Repository
+    UseCase --> Service
 
     RepositoryImpl .up.|> Repository
     ServiceImpl .up.|> Service

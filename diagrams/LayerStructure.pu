@@ -8,15 +8,15 @@ skinparam NodeFontStyle Bold
 
 rectangle {
     node "プレゼンテーション（Presentation）" as Presentation #dae8fc
-    node "ユースケース（UseCase）" as UseCase #d5e8d4
+    node "アプリケーション（Application）" as Application #d5e8d4
     node "ドメイン（Domain）" as Domain #ffe6cc
     node "インフラストラクチャ（Infrastructure）" as Infrastructure #f8cecc
 
-    Presentation --> UseCase
+    Presentation --> Application
     Presentation --> Domain
-    UseCase --> Domain
+    Application --> Domain
     Infrastructure -up-> Domain
-    Infrastructure -up-> UseCase
+    Infrastructure -up-> Application
     Infrastructure -up-> Presentation
 }
 
@@ -24,7 +24,7 @@ note right of Presentation
 画面の入出力、API のエンドポイントとなる。
 end note
 
-note right of UseCase
+note right of Application
 Domain 層のオブジェクトを利用してユースケースを実現する。
 end note
 

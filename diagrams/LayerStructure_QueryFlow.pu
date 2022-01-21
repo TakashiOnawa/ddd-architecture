@@ -1,13 +1,35 @@
 @startuml LayerStructure_QueryFlow
 
 participant Controller
+participant UseCase
 participant QueryService
+participant DomainObject
+participant Repository
 database DB
 
-Controller -> QueryService: 参照に特化した DTO 取得(Id)
-QueryService -> DB: SQL 発行（select）
-DB -> QueryService: ORM で受け取る
-QueryService -> QueryService: ORM を DTO に変換
-QueryService -> Controller: DTO を返却
+group DomainObject を利用するパターン
+    Controller -> Controller: パラメータ DTO 生成
+    Controller -> UseCase: 参照系処理実行(DTO)
+    UseCase -> Repository: DomainObject を取得(Id)
+    Repository -> DB: SQLを発行（select）
+    DB -> Repository: ORM で受け取る
+    Repository -> Repository: ORM を DomainObject に変換
+    Repository -> UseCase: DomainObject を返却
+    UseCase -> UseCase: DomainObject を DTO に変換
+    UseCase -> Controller: DTO を返却
+end
+
+group QueryService を利用するパターン
+    Controller -> Controller: パラメータ DTO 生成
+    Controller -> UseCase: 参照系処理実行(DTO)
+    UseCase -> QueryService: 参照に特化した DTO 取得(Id)
+    QueryService -> DB: SQL 発行（select）
+    DB -> QueryService: ORM で受け取る
+    QueryService -> QueryService: ORM を DTO に変換
+    QueryService -> UseCase: DTO を返却
+    UseCase -> DomainObject: 必要に応じてビジネスルールを適用した計算・加工 を実施
+    DomainObject -> UseCase
+    UseCase -> Controller: DTO を返却
+end
 
 @enduml
