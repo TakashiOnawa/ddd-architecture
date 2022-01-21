@@ -35,21 +35,20 @@ rectangle {
     Controller --> UseCase
     Controller --> DomainObject
 
-    UseCase -> QueryService
     UseCase --> DomainObject
     UseCase --> Repository
     UseCase --> Service
+    UseCase -> QueryService
 
     RepositoryImpl .up.|> Repository
     ServiceImpl .up.|> Service
     QueryServiceImpl .up.|> QueryService
 
-    Repository -> DomainObject
+    Repository --> DomainObject
     Service -> DomainObject
 
     RepositoryImpl -up-> DomainObject
     ServiceImpl -up-> DomainObject
-    QueryServiceImpl -up-> DomainObject
 }
 
 @enduml
