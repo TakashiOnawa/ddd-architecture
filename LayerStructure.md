@@ -30,18 +30,18 @@
 
 ## インフラストラクチャ（Infrastructure）層
 - ドメイン層に定義されたインターフェース（Repository、Service など）、アプリケーション層に定義されたインターフェース（QueryService など）に対して技術的機能を利用した実装を行う。
-- もちろん、プレゼンテーション層に必要な技術的機能の実装を提供しても構わない。その場合は、プレゼンテーション層にインターフェースを配置する。
+- プレゼンテーション層に必要な技術的機能の実装を提供しても構わない。その場合は、プレゼンテーション層にインターフェースを配置する。
 - 技術的機能とは、データベースへのアクセスや ORM を利用した処理、各種ミドルウェアを利用した処理である。
 
 ### プレゼンテーション（Presentation）層
 - アプリケーション層の UseCase クラスに処理を移譲する。
-- アプリケーション層、ドメイン層で発生した例外のハンドリングを行い、エラー内容を画面に表示したり、API の戻り値の JSON に変換するなどを行う。
+- アプリケーション層、ドメイン層で発生した例外をハンドリングし、エラー内容を画面に表示したり、API の戻り値の JSON に変換するなどを行う。
 
 ## 処理フロー
 ### 登録/更新系
 ![](./diagrams/LayerStructure_CommandFlow/LayerStructure_CommandFlow.png)
-- Repository と DB の間に SQL を発行するだけの責務を持った DAO を挟んでも良い。
+- Repository と DB の間に SQL を発行するだけの責務を持った DAO を挟んでも良い。（その場合、DAO は Repository と 1 対 1 で作る。）
 
 ### 参照系
 ![](./diagrams/LayerStructure_QueryFlow/LayerStructure_QueryFlow.png)
-- QueryService と DB の間に SQL を発行するだけの責務を持った DAO を挟んでも良い。
+- QueryService と DB の間に SQL を発行するだけの責務を持った DAO を挟んでも良い。（その場合、DAO は QueryService と 1 対 1 で作る。）
